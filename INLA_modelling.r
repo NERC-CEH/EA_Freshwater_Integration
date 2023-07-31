@@ -185,9 +185,33 @@ grid1km$pred.prob=(1-exp(-exp(grid1km$Est)))
 
 grid1km$ENG <- inout(grid1km[,1:2],ENG)
 
-colr=tim.colors(10)
+colr=viridis(10)
 #plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling((grid1km$Est[grid1km$ENG]*10)+104)],cex=0.15,asp=1)
 plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[as.integer(as.factor(cut(grid1km$Est[grid1km$ENG],c(-200,-8:0,200))))],cex=0.15,asp=1)
+
+library(viridis)
+colr=viridis(10)
+
+library(splancs)
+GB2 <- GB[complete.cases(GB),]
+in.GB <- inout(occ[,5:6],GB2)
+occGB <- occ[in.GB,]
+
+png("Figure 3 - 3 panel version.png", height = 1600, width = 2800, res = 300)
+par(mfrow=c(1,3), xpd = TRUE)
+plot(dat1yr[,9:10],asp=1,xlab="",ylab="", xlim = c(0, 700000), ylim = c(0, 1000000), frame= FALSE, axes = FALSE, pch = 20, col = "grey")
+text(600000,1200000, "a)", cex = 2, font = 2)
+points(dat2yr[,9:10],pch=20,col="black")
+lines(GB)
+plot(occGB[,5:6],asp=1,xlab="",ylab="", xlim = c(0, 700000), ylim = c(0, 1000000), frame= FALSE, axes = FALSE, pch = 20, col = "blue")
+text(600000,1200000, "b)", cex = 2, font = 2)
+lines(GB)
+plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[as.integer(as.factor(cut(grid1km$Est[grid1km$ENG],c(-200,-8:0,200))))],cex=0.15,asp=1,xaxt="n",yaxt="n", xlim = c(0, 700000), ylim = c(0, 1000000), ylab = "", xlab = "", frame = FALSE, axes = FALSE)
+legend(0, 1200000,title=as.expression(bquote(bold("Occurrence probability\n (on cloglog scale)"))),bty="n",legend=rev(c("< -8","-8:-7","-7:-6","-6:-5","-5:-4","-4:-3","-3:-2","-2:-1","-1:0","> 0")),pch=15,col=rev(colr),cex=1.2,pt.cex=1.3)
+text(600000,1200000, "c)", cex = 2, font = 2)
+lines(ENG)
+#legend("bottomright",title="Integrated model - mean estimate",bty="n",legend="")
+dev.off()
 
 ############################
 

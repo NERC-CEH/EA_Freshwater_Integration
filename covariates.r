@@ -6,10 +6,10 @@
 ###################################
 
 #load libraries required
-library(shapefiles)
+#library(shapefiles)
 library(reshape2)
-library(caret)
-library(gdata)
+#library(caret)
+#library(gdata)
 library(rgeos)
 library(sp)
 library(rgdal)
@@ -37,11 +37,11 @@ grid1km$Layer <- 1:length(grid1km[,1])
 
 ## read in river network covariate data - nodes and sources
 
-cpm = read_sf("C://TempData//EA//IRN_Sources.shp")
+cpm = read_sf("IRN_Sources.shp")
 cpm_points = st_centroid(cpm) 
 cpm_points = st_transform(cpm_points, crs="+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +datum=OSGB36 +units=m +no_defs")
 
-cpm2 = read_sf("C://TempData//EA//IRN_Nodes.shp")
+cpm2 = read_sf("IRN_Nodes.shp")
 cpm2_points = st_centroid(cpm2) 
 cpm2_points = st_transform(cpm2_points, crs="+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +datum=OSGB36 +units=m +no_defs")
 
@@ -78,7 +78,7 @@ grid1km$sp.prox <- paste(grid1km$X,grid1km$Y,sep="_")
 ################################
 
 ## read in the percent target class data from the land cover map. 
-dat <- read.table("C://TempData//EA//LCM2007_GB_1K_PC_TargetClass_22.asc",skip=6)
+dat <- read.table("LCM2007_GB_1K_PC_TargetClass_22.asc",skip=6)
 
 
 ##set up a data frame of spatial locations according to LCM ascii file
@@ -145,7 +145,7 @@ plot(grid1km[grid1km$ENG,1:2],pch=15,cex=0.15,col=colr[((grid1km$Urban[grid1km$E
 legend("topleft",col=colr[seq(1,100,by=10)],pch=15,pt.cex=2,legend=seq(0,99,by=10),bty="n",title="% Urban")
 
 
+grid_sf <- st_as_sf(grid1km, coords = c("X","Y"))
 
-
-
+grid_r <- rasterize(grid_sf[,c(1:4,6)], r)
 

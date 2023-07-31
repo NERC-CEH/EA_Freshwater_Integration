@@ -83,9 +83,10 @@ legend("bottomright",title="Integrated model - mean estimate",bty="n",legend="")
 
 colr=rev(grey(seq(0.05,0.95,len=12)))
 colr=c(colr,rep(colr[12],5000))
-plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err[grid1km$ENG])*100))],cex=0.15,asp=1,xaxt="n",yaxt="n")
+plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err[grid1km$ENG])*100))],cex=0.15,asp=1,xaxt="n",yaxt="n", ylab = "", xlab = "", frame = FALSE)
 lines(ENG)
-legend("bottomright",title="Integrated model - uncertainty",bty="n",legend="")
+#legend("bottomright",title="Integrated model - uncertainty",bty="n",legend="")
+text(text(600000,1200000, "a)", cex = 2, font = 2))
 legend("topleft",title="Standard Error of prediction",bty="n",legend=c("0:0.01","0.01:0.02","0.02:0.03","0.03:0.04","0.04:0.05","0.05:0.06","0.06:0.07","0.07:0.08","0.08:0.09","0.09:0.1","> 0.1"),pch=15,col=colr[1:11],cex=0.7,pt.cex=1.3)
 
 
@@ -102,5 +103,36 @@ plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err.EA[grid1km$E
 lines(ENG)
 legend("bottomright",title="Agency only model - uncertainty",bty="n",legend="")
 legend("topleft",title="Standard Error of prediction",bty="n",legend=c("0:0.01","0.01:0.02","0.02:0.03","0.03:0.04","0.04:0.05","0.05:0.06","0.06:0.07","0.07:0.08","0.08:0.09","0.09:0.1","> 0.1"),pch=15,col=colr[1:11],cex=0.7,pt.cex=1.3)
+
+
+
+png("Appendix - Uncertainty plot v2.png", height = 2200, width = 2200, res = 300)
+par(mfrow=c(2,2), xpd = TRUE)
+colr=rev(grey(seq(0.05,0.95,len=12)))
+colr=c(colr,rep(colr[12],5000))
+plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err[grid1km$ENG])*100))],cex=0.15,asp=1,xaxt="n",yaxt="n", ylab = "", xlab = "", frame = FALSE)
+lines(ENG)
+#legend("bottomright",title="Integrated model - uncertainty",bty="n",legend="")
+text(600000,600000, "a)", cex = 1.2, font = 2)
+legend("topleft",title="Standard error\n of prediction",bty="n",legend=c("0:0.01","0.01:0.02","0.02:0.03","0.03:0.04","0.04:0.05","0.05:0.06","0.06:0.07","0.07:0.08","0.08:0.09","0.09:0.1","> 0.1"),pch=15,col=colr[1:11],cex=0.7,pt.cex=1.3)
+
+colr=rev(grey(seq(0.05,0.95,len=12)))
+colr=c(colr,rep(colr[12],5000))
+plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err.EA[grid1km$ENG])*100))],cex=0.15,asp=1,xaxt="n",yaxt="n", ylab = "", xlab = "", frame = FALSE)
+lines(ENG)
+#legend("bottomright",title="Agency only model - uncertainty",bty="n",legend="")
+text(600000,600000, "b)", cex = 1.2, font = 2)
+legend("topleft",title="Standard error\n of prediction",bty="n",legend=c("0:0.01","0.01:0.02","0.02:0.03","0.03:0.04","0.04:0.05","0.05:0.06","0.06:0.07","0.07:0.08","0.08:0.09","0.09:0.1","> 0.1"),pch=15,col=colr[1:11],cex=0.7,pt.cex=1.3)
+
+
+colr=rev(grey(seq(0.05,0.95,len=9)))
+colr=c(colr,rep(colr[9],5000))
+plot(grid1km[grid1km$ENG,1:2],pch=15,col=colr[ceiling(((grid1km$err[grid1km$ENG]-grid1km$err.EA[grid1km$ENG])+0.4)*10)],cex=0.15,asp=1,xaxt="n",yaxt="n", ylab = "", xlab = "", frame = FALSE)
+lines(ENG)
+#legend("bottomright",title="Agency only model - uncertainty",bty="n",legend="")
+text(600000,600000, "c)", cex = 1.2, font = 2)
+legend("topleft",title="Difference in standard\n error of prediction",bty="n",legend=c("< -0.3","-0.3:-0.2","-0.2:-0.1","-0.1:0","0:0.1","0.1:0.2","0.2:0.3","0.3:0.4","> 0.4"),pch=15,col=colr[1:9],cex=0.7,pt.cex=1.3)
+
+dev.off()
 
 

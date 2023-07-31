@@ -6,7 +6,7 @@
 ###
 ########################################################################
 
-setwd("C://TempData//EA//")
+#setwd("C://TempData//EA//")
 
 ### Read in the agency data as downloaded from: https://environment.data.gov.uk/ecology-fish/downloads/
 tx <- read.csv("INV_OPEN_DATA_TAXA.csv")
@@ -66,7 +66,7 @@ occ$NORTHING=data.frame(cord.BNG)[,2]
 
 
 #read in GB coast file to provide boundary polygon
-GB <- read.table("N://Ecosystem Service//BEEBUTT//GBoutline.txt",header=T)
+GB <- read.table("GBoutline.txt",header=T)
 #specify England polygon only
 ENG <- GB[1:1662,]
 
